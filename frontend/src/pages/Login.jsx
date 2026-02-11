@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ const Login = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,7 +25,7 @@ const Login = () => {
             else navigate('/student/dashboard');
 
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Login failed');
+            toast.error(error.response?.data?.message || error.message || 'Login failed');
         } finally {
             setIsLoading(false);
         }
@@ -46,15 +48,22 @@ const Login = () => {
                         />
                     </div>
 
-                    <div>
+                    <div className="relative">
                         <label className="block text-text-dark mb-1 text-sm font-medium">Password</label>
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             required
-                            className="w-full px-4 py-2 border border-input-border rounded focus:outline-none focus:border-primary bg-background"
+                            className="w-full px-4 py-2 border border-input-border rounded focus:outline-none focus:border-primary bg-background pr-12"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-[34px] text-text-muted hover:text-primary transition-colors"
+                        >
+                            {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+                        </button>
                     </div>
 
                     <button

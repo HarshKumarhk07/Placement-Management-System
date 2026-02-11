@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import api from '../../api/axios';
+import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -20,8 +20,8 @@ const CreateJob = () => {
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const res = await api.get('/companies');
-                setCompanies(res.data);
+                const res = await axios.get('/companies');
+                setCompanies(res.data.data || []);
             } catch (error) {
                 console.error("Failed to fetch companies");
             }
@@ -36,7 +36,7 @@ const CreateJob = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.post('/jobs', formData);
+            await axios.post('/jobs', formData);
             toast.success('Job Drive created successfully!');
             navigate('/admin/dashboard');
         } catch (error) {

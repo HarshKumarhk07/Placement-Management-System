@@ -13,8 +13,9 @@ const applicationSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['applied', 'shortlisted', 'interview_scheduled', 'selected', 'rejected', 'on_hold'],
-        default: 'applied',
+        enum: ['Applied', 'Shortlisted', 'Interview Scheduled', 'Interviewed', 'Selected', 'Rejected', 'On Hold', 'LOI Issued', 'Offer Released'],
+        default: 'Applied',
+        index: true
     },
     interviewStatus: {
         type: String,
@@ -47,6 +48,19 @@ const applicationSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+        index: true
+    },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    updatedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 }, { timestamps: true });
 
 // Prevent duplicate applications

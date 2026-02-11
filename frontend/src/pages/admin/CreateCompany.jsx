@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import api from '../../api/axios';
+import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -18,7 +18,7 @@ const CreateCompany = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.post('/companies', formData);
+            await axios.post('/companies', formData);
             toast.success('Company created successfully!');
             navigate('/admin/dashboard');
         } catch (error) {

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const parser = require('../utils/cloudinaryConfig');
 
-router.post('/upload', parser.single('file'), (req, res) => {
+router.post('/', parser.single('file'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ message: 'No file uploaded' });
     }

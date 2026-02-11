@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
+        unique: true,
+        sparse: true, // Allow multiple nulls if any exist, though here it's fine
+        index: true
     },
     profile: {
         // Student specific fields
@@ -39,7 +42,28 @@ const userSchema = new mongoose.Schema({
         },
         designation: String,
     },
+    refreshToken: {
+        type: String,
+        select: false
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+        index: true
+    },
+    lastLoginIp: String,
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    updatedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 }, { timestamps: true });
+
+// Compound Index for efficient role-based queries
+userSchema.index({ email: 1, role: 1 });
 
 // Password hashing middleware
 userSchema.pre('save', async function () {

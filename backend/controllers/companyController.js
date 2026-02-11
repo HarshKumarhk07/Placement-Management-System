@@ -20,9 +20,15 @@ const createCompany = async (req, res) => {
             logo,
         });
 
-        res.status(201).json(company);
+        res.status(201).json({
+            success: true,
+            data: company
+        });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 };
 
@@ -32,9 +38,15 @@ const createCompany = async (req, res) => {
 const getCompanies = async (req, res) => {
     try {
         const companies = await Company.find({});
-        res.json(companies);
+        res.json({
+            success: true,
+            data: companies
+        });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 };
 
@@ -46,12 +58,21 @@ const getCompanyById = async (req, res) => {
         const company = await Company.findById(req.params.id);
 
         if (company) {
-            res.json(company);
+            res.json({
+                success: true,
+                data: company
+            });
         } else {
-            res.status(404).json({ message: 'Company not found' });
+            res.status(404).json({
+                success: false,
+                message: 'Company not found'
+            });
         }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 };
 

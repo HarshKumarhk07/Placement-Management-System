@@ -12,7 +12,7 @@ const JobApplications = () => {
         const fetchApplications = async () => {
             try {
                 const res = await api.get(`/applications/job/${jobId}`);
-                setApplications(res.data);
+                setApplications(res.data.data || []);
             } catch (error) {
                 toast.error("Failed to fetch applications");
             } finally {

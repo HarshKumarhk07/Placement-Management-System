@@ -38,6 +38,24 @@ const jobSchema = new mongoose.Schema({
         ref: 'User', // Admin who created the drive
         required: true,
     },
+    status: {
+        type: String,
+        enum: ['Active', 'Closed', 'Expired'],
+        default: 'Active',
+        index: true
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+        index: true
+    },
+    updatedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 }, { timestamps: true });
+
+// Compound Index for efficient filtering
+jobSchema.index({ status: 1, deadline: 1 });
 
 module.exports = mongoose.model('Job', jobSchema);

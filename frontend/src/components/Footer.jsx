@@ -3,17 +3,17 @@ import { FiMapPin } from 'react-icons/fi';
 
 const Footer = () => {
     return (
-        <footer className="bg-primary text-white pt-12 pb-6 mt-12">
+        <footer className="bg-primary text-white pt-8 pb-4 mt-8">
             <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
 
                 {/* Brand Section */}
                 <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                        {/* Logo Placeholder - User to replace src */}
-                        <img src="/logo.png" alt="Avani Enterprises" className="h-12 w-12 object-contain bg-white rounded-full p-1" />
+                    <div className="flex items-center gap-4">
+                        {/* Logo without white border */}
+                        <img src="/avani_enterprises_logo.jpg" alt="Avani Enterprises" className="h-16 w-16 object-cover rounded-lg shadow-lg" />
                         <div>
-                            <h3 className="font-bold text-xl leading-tight">AVANI</h3>
-                            <p className="text-accent text-sm tracking-widest">ENTERPRISES</p>
+                            <h3 className="font-extrabold text-2xl leading-none text-white tracking-wide uppercase" style={{ fontFamily: 'serif' }}>AVANI</h3>
+                            <p className="text-accent text-xs tracking-[0.2em] font-medium mt-1">ENTERPRISES</p>
                         </div>
                     </div>
                     <p className="text-gray-300 text-sm italic">
@@ -69,7 +69,7 @@ const Footer = () => {
             </div>
 
             {/* Copyright Section */}
-            <div className="border-t border-gray-700 mt-10 pt-6 text-center text-sm text-gray-400">
+            <div className="border-t border-gray-700 mt-6 pt-4 text-center text-sm text-gray-400">
                 <p>
                     &copy; 2025 Avani HR Portal. All rights reserved. |
                     <span className="mx-2 hover:text-white cursor-pointer">Privacy Policy</span> |

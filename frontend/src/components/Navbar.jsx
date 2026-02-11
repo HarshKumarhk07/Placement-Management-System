@@ -6,10 +6,9 @@ const Navbar = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
-    const handleLogout = (e) => {
+    const handleLogout = async (e) => {
         e.preventDefault();
-        // No propagation needed if we use button correctly
-        logout();
+        await logout();
         navigate('/login');
     };
 
@@ -24,12 +23,11 @@ const Navbar = () => {
     return (
         <nav className="bg-primary text-white shadow-md">
             <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-                <Link to={getDashboardLink()} className="text-xl font-bold flex items-center gap-3">
-                    <img src="/logo.png" alt="Avani Logo" className="h-10 w-10 object-contain bg-white rounded-full p-1" />
-                    <div className="leading-tight">
-                        <span className="block text-lg tracking-wide">AVANI</span>
-                        <span className="block text-xs text-accent font-normal tracking-wider">ENTERPRISES</span>
-                    </div>
+                <Link to={getDashboardLink()} className="flex items-center gap-4">
+                    <img src="/avani_enterprises_logo.jpg" alt="Avani Logo" className="h-12 w-12 object-cover rounded-lg shadow-lg" />
+                    <span className="text-2xl font-extrabold tracking-widest text-[#FFF8E1] uppercase" style={{ fontFamily: 'serif' }}>
+                        AVANI ENTERPRISES
+                    </span>
                 </Link>
 
                 <div className="flex items-center gap-6">

@@ -14,7 +14,7 @@ const RecruiterDashboard = () => {
             if (user?.profile?.companyId) {
                 try {
                     const res = await api.get(`/jobs/company/${user.profile.companyId}`);
-                    setJobs(res.data);
+                    setJobs(res.data.data || []);
                 } catch (error) {
                     console.error("Failed to fetch jobs");
                 } finally {

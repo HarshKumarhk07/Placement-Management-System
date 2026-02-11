@@ -15,7 +15,7 @@ const JobDetails = () => {
         const fetchJob = async () => {
             try {
                 const res = await api.get(`/jobs/${id}`);
-                setJob(res.data);
+                setJob(res.data.data);
             } catch (error) {
                 toast.error("Failed to load job details");
             } finally {
@@ -26,12 +26,19 @@ const JobDetails = () => {
     }, [id]);
 
     const handleApply = async () => {
+        // Check if user has uploaded resume
+        if (!user?.profile?.resumeUrl) {
+            toast.error('Please upload your resume in your profile before applying');
+            navigate('/profile');
+            return;
+        }
+
         // Confirm before applying
         if (!window.confirm("Are you sure you want to apply for this position?")) return;
 
         try {
             await api.post('/applications', { jobId: id });
-            toast.success('Applied successfully!');
+            toast.success('Application submitted successfully!');
             navigate('/student/applications');
         } catch (error) {
             toast.error(error.response?.data?.message || 'Failed to apply');

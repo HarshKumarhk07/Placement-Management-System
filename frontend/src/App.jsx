@@ -8,8 +8,14 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
-import CreateCompany from './pages/admin/CreateCompany';
-import CreateJob from './pages/admin/CreateJob';
+import CompanyManagement from './pages/admin/CompanyManagement';
+import DriveManagement from './pages/admin/DriveManagement';
+import ApplicationManagement from './pages/admin/ApplicationManagement';
+import StudentManagement from './pages/admin/StudentManagement'; // New
+import AuditLogs from './pages/admin/AuditLogs';
+import AdminLayout from './layouts/AdminLayout'; // Fixed missing import
+import CreateCompany from './pages/admin/CreateCompany'; // Keep for now or delete?
+import CreateJob from './pages/admin/CreateJob'; // Keep for now or delete?
 import StudentDashboard from './pages/student/StudentDashboard';
 import JobDetails from './pages/student/JobDetails';
 import MyApplications from './pages/student/MyApplications';
@@ -22,43 +28,48 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <div className="bg-background min-h-screen text-text-dark font-sans">
+        <div className="bg-background min-h-screen text-text-dark font-sans flex flex-col">
           <Navbar />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+          <div className="flex-grow">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-            {/* Redirect root to login (or dashboard via Navbar logic impact?) 
-                Actually, Navbar handles logo click. Root path should probably redirect to login or check auth. 
-                Let's keep the existing redirect for now, or make a Home component.
-                For now, redirect to login is safe.
-            */}
-            <Route path="/" element={<Navigate to="/login" replace />} />
+              <Route path="/" element={<Navigate to="/login" replace />} />
 
-            {/* Protected Routes */}
-            <Route element={<ProtectedRoute allowedRoles={['student']} />}>
-              <Route path="/student/dashboard" element={<StudentDashboard />} />
-              <Route path="/student/jobs/:id" element={<JobDetails />} />
-              <Route path="/student/applications" element={<MyApplications />} />
-            </Route>
+              {/* Protected Routes */}
+              <Route element={<ProtectedRoute allowedRoles={['student']} />}>
+                <Route path="/student/dashboard" element={<StudentDashboard />} />
+                <Route path="/student/jobs/:id" element={<JobDetails />} />
+                <Route path="/student/applications" element={<MyApplications />} />
+              </Route>
 
-            <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              <Route path="/admin/companies/create" element={<CreateCompany />} />
-              <Route path="/admin/jobs/create" element={<CreateJob />} />
-            </Route>
+              {/* Admin Routes with Layout */}
+              <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route path="dashboard" element={<AdminDashboard />} />
+                  <Route path="companies" element={<CompanyManagement />} />
+                  <Route path="companies/create" element={<CreateCompany />} />
+                  <Route path="drives" element={<DriveManagement />} />
+                  <Route path="jobs/create" element={<CreateJob />} />
+                  <Route path="applications" element={<ApplicationManagement />} />
+                  <Route path="students" element={<StudentManagement />} />
+                  <Route path="logs" element={<AuditLogs />} />
+                </Route>
+              </Route>
 
-            <Route element={<ProtectedRoute allowedRoles={['recruiter']} />}>
-              <Route path="/recruiter/dashboard" element={<RecruiterDashboard />} />
-              <Route path="/recruiter/jobs/:jobId/applications" element={<JobApplications />} />
-            </Route>
+              <Route element={<ProtectedRoute allowedRoles={['recruiter']} />}>
+                <Route path="/recruiter/dashboard" element={<RecruiterDashboard />} />
+                <Route path="/recruiter/jobs/:jobId/applications" element={<JobApplications />} />
+              </Route>
 
-            {/* Common Protected Routes */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/profile" element={<StudentProfile />} />
-            </Route>
+              {/* Common Protected Routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/profile" element={<StudentProfile />} />
+              </Route>
 
-          </Routes>
+            </Routes>
+          </div>
           <Footer />
           <ToastContainer position="top-right" autoClose={3000} />
         </div>

@@ -4,33 +4,69 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const { errorHandler } = require('./middleware/errorMiddleware');
 
+const helmet = require('helmet');
+const { authLimiter, apiLimiter } = require('./middleware/rateLimiter');
+const startCronJobs = require('./utils/cronJobs');
+
 dotenv.config();
+startCronJobs(); // Initialize Cron
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(express.json());
-app.use(cors());
+// Request Logger for Debugging
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+});
+
+const cookieParser = require('cookie-parser');
+
+// 1. CORS Middleware (Must be very early for preflights)
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true // Allow cookies
+}));
+
+// 2. Standard Middleware
+app.use(express.json({ limit: '10kb' })); // Body limit
+app.use(cookieParser()); // Parse Cookie header
+
+// 3. Security Middleware
+app.use(helmet());
+
+// 4. Global Rate Limiting
+app.use('/api', apiLimiter);
+app.use('/api/auth', authLimiter); // Stricter limit for auth
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
 const companyRoutes = require('./routes/companyRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 const applicationRoutes = require('./routes/applicationRoutes');
-const statsRoutes = require('./routes/statsRoutes');
+const statsRoutes = require('./routes/statsRoutes'); // Legacy stats?
+const adminRoutes = require('./routes/adminRoutes'); // New Enterprise Admin
 const uploadRoutes = require('./routes/uploadRoutes');
+const activeJobsRoutes = require('./routes/activeJobsRoutes'); // Dedicated active jobs route
 
 app.use('/api/auth', authRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/admin', adminRoutes); // New
 app.use('/api/upload', uploadRoutes);
+app.use('/api/active-jobs', activeJobsRoutes); // Dedicated active jobs endpoint
 
 // Health Check
 app.get('/', (req, res) => {
     res.send('Placement Management System API is running...');
+});
+
+// Catch-all for unmatched routes
+app.use((req, res, next) => {
+    console.log(`404 - Unmatched Route: ${req.method} ${req.url}`);
+    res.status(404).json({ message: `Route ${req.method} ${req.url} not found` });
 });
 
 // Error Middleware (Must be last)

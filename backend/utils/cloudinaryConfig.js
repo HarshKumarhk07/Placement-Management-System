@@ -12,8 +12,9 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: 'placement-system-resumes',
-        resource_type: 'auto', // Allow images and pdfs
-        allowed_formats: ['jpg', 'png', 'pdf'],
+        resource_type: 'raw', // For PDFs and documents
+        allowed_formats: ['pdf', 'doc', 'docx'],
+        access_mode: 'public', // Make resumes publicly accessible
     },
 });
 

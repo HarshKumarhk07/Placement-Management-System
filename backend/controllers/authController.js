@@ -14,6 +14,10 @@ const registerStudent = async (req, res) => {
     const { name, email, password, phone, course, college, year, skills } = req.body;
 
     try {
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: 'Please provide all required fields' });
+        }
+
         const userExists = await User.findOne({ email });
 
         if (userExists) {
@@ -46,6 +50,7 @@ const registerStudent = async (req, res) => {
             res.status(400).json({ message: 'Invalid user data' });
         }
     } catch (error) {
+        console.error("Register Error:", error);
         res.status(500).json({ message: error.message });
     }
 };
@@ -56,10 +61,20 @@ const registerStudent = async (req, res) => {
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
-    try {
-        const user = await User.findOne({ email });
+    // 1. Basic Validation
+    if (!email || !password) {
+        return res.status(400).json({ message: 'Please provide email and password' });
+    }
 
+    try {
+        console.log(`Login attempt for: ${email}`);
+
+        // 2. Find User with timeout safeguard
+        const user = await User.findOne({ email }).maxTimeMS(5000); // Fail fast if DB slow
+
+        // 3. Check User and Password
         if (user && (await user.matchPassword(password))) {
+            console.log(`User authenticated: ${user._id}`);
             res.json({
                 _id: user._id,
                 name: user.name,
@@ -68,11 +83,18 @@ const loginUser = async (req, res) => {
                 token: generateToken(user._id),
             });
         } else {
+            console.warn(`Invalid login attempt for: ${email}`);
             res.status(401).json({ message: 'Invalid email or password' });
         }
     } catch (error) {
-        console.error("Login Error:", error);
-        res.status(500).json({ message: error.message });
+        console.error("Login Exception:", error);
+
+        // Handle Mongoose/MongoDB specific errors
+        if (error.name === 'MongooseError' || error.name === 'MongoTimeoutError') {
+            return res.status(503).json({ message: 'Database service unavailable. Please try again.' });
+        }
+
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 };
 
@@ -80,18 +102,23 @@ const loginUser = async (req, res) => {
 // @route   GET /api/auth/me
 // @access  Private
 const getMe = async (req, res) => {
-    const user = await User.findById(req.user._id);
+    try {
+        const user = await User.findById(req.user._id);
 
-    if (user) {
-        res.json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            profile: user.profile,
-        });
-    } else {
-        res.status(404).json({ message: 'User not found' });
+        if (user) {
+            res.json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                profile: user.profile,
+            });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error("GetMe Error:", error);
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -167,3 +194,4 @@ const updateProfile = async (req, res) => {
 };
 
 module.exports = { registerStudent, loginUser, getMe, createUser, updateProfile };
+

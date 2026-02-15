@@ -473,6 +473,32 @@ const deleteApplication = async (req, res) => {
     }
 };
 
+const deleteBulkApplications = async (req, res) => {
+    const { ids } = req.body;
+    try {
+        if (!ids || ids.length === 0) {
+            return res.status(400).json({ message: 'No applications selected' });
+        }
+
+        await Application.deleteMany({ _id: { $in: ids } });
+
+        await logActivity(req, 'DELETE', 'Application', null, {
+            count: ids.length,
+            ids: ids
+        });
+
+        res.json({
+            success: true,
+            message: `${ids.length} applications deleted successfully`
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
     getDashboardStats,
     createCompany,
@@ -483,6 +509,7 @@ module.exports = {
     getAllApplications,
     updateApplicationStatus,
     deleteApplication,
+    deleteBulkApplications, // New export
     exportApplicationsToCSV,
     getAuditLogs,
     getAllStudents,

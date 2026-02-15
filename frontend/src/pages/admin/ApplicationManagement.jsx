@@ -15,7 +15,9 @@ const ApplicationManagement = () => {
 
     const [filterCompany, setFilterCompany] = useState(initialJob); // New
     const [searchTerm, setSearchTerm] = useState(''); // New
+
     const [debouncedSearch, setDebouncedSearch] = useState('');
+    const [selectedIds, setSelectedIds] = useState([]); // New state for bulk selection
 
     useEffect(() => {
         fetchCompanies();
@@ -79,6 +81,34 @@ const ApplicationManagement = () => {
             fetchApplications();
         } catch (error) {
             toast.error('Delete failed');
+        }
+    };
+
+    const handleSelectAll = (e) => {
+        if (e.target.checked) {
+            setSelectedIds(applications.map(app => app._id));
+        } else {
+            setSelectedIds([]);
+        }
+    };
+
+    const handleSelectOne = (id) => {
+        if (selectedIds.includes(id)) {
+            setSelectedIds(selectedIds.filter(itemId => itemId !== id));
+        } else {
+            setSelectedIds([...selectedIds, id]);
+        }
+    };
+
+    const handleBulkDelete = async () => {
+        if (!window.confirm(`Are you sure you want to delete ${selectedIds.length} applications?`)) return;
+        try {
+            await axios.post('/admin/applications/bulk-delete', { ids: selectedIds });
+            toast.success('Applications deleted successfully');
+            setSelectedIds([]);
+            fetchApplications();
+        } catch (error) {
+            toast.error('Bulk delete failed');
         }
     };
 
@@ -148,7 +178,7 @@ const ApplicationManagement = () => {
                         value={filterStatus}
                         onChange={(e) => setFilterStatus(e.target.value)}
                     >
-                        <option value="">All Statuses</option>
+                        <option value="">All Status</option>
                         <option value="Applied">Applied</option>
                         <option value="Shortlisted">Shortlisted</option>
                         <option value="Interview Scheduled">Interview Scheduled</option>
@@ -166,6 +196,15 @@ const ApplicationManagement = () => {
                     >
                         Export CSV
                     </button>
+                    {/* Bulk Delete Button */}
+                    {selectedIds.length > 0 && (
+                        <button
+                            onClick={handleBulkDelete}
+                            className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+                        >
+                            <FiTrash2 /> Delete Selected ({selectedIds.length})
+                        </button>
+                    )}
                 </div>
             </div>
 
@@ -178,6 +217,14 @@ const ApplicationManagement = () => {
                             <th className="p-4 font-semibold text-gray-600">Role</th>
                             <th className="p-4 font-semibold text-gray-600">Status</th>
                             <th className="p-4 font-semibold text-gray-600">Action</th>
+                            <th className="p-4 font-semibold text-gray-600 w-10">
+                                <input
+                                    type="checkbox"
+                                    onChange={handleSelectAll}
+                                    checked={applications.length > 0 && selectedIds.length === applications.length}
+                                    className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                                />
+                            </th>
                         </tr>
                     </thead>
                     <tbody className="divide-y">
@@ -217,6 +264,14 @@ const ApplicationManagement = () => {
                                     >
                                         <FiTrash2 />
                                     </button>
+                                </td>
+                                <td className="p-4">
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedIds.includes(app._id)}
+                                        onChange={() => handleSelectOne(app._id)}
+                                        className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                                    />
                                 </td>
                             </tr>
                         ))}

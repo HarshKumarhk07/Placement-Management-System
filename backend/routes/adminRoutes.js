@@ -36,6 +36,7 @@ router.get('/applications', getAllApplications);
 router.get('/export/applications', exportApplicationsToCSV);
 router.put('/application/:id/status', updateApplicationStatus);
 router.delete('/application/:id', deleteApplication);
+router.post('/applications/bulk-delete', require('../controllers/adminController').deleteBulkApplications);
 
 // Audit Logs
 router.get('/audit-logs', getAuditLogs);

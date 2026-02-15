@@ -31,7 +31,7 @@ const cookieParser = require('cookie-parser');
 
 // 1. CORS Middleware (Must be very early for preflights)
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: process.env.FRONTEND_URL || 'https://placement-management-system-1o2lvw19v.vercel.app',
     credentials: true // Allow cookies
 }));
 

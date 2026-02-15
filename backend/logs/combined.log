@@ -1,0 +1,54 @@
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:45:51"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:45:51"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:46:35"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:46:35"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:46:35"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:46:35"}
+{"level":"warn","message":"Auth Rate Limit Exceeded: IP ::1","timestamp":"2026-02-11 19:46:53"}
+{"level":"warn","message":"Auth Rate Limit Exceeded: IP ::1","timestamp":"2026-02-11 19:46:53"}
+{"level":"warn","message":"Auth Rate Limit Exceeded: IP ::1","timestamp":"2026-02-11 19:47:24"}
+{"level":"warn","message":"Auth Rate Limit Exceeded: IP ::1","timestamp":"2026-02-11 19:47:30"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:51:31"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:51:31"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:51:31"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:51:31"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:51:47"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:51:47"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:52:00"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:52:00"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:52:00"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:52:00"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:52:51"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:52:51"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:03"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:03"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:15"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:15"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:19"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:19"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:22"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:22"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:22"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:22"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:32"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:32"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:32"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:32"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:40"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:53:40"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:56:39"}
+{"level":"error","message":"Auth Failed: jwt malformed - IP: ::1","timestamp":"2026-02-11 19:56:39"}
+{"level":"info","message":"Company Amazon created with Recruiter recruiter01@gmail.com by Admin admin@avani.com","timestamp":"2026-02-11 19:59:48"}
+{"level":"info","message":"Running Cron Job: Auto-Close Expired Drives","timestamp":"2026-02-13 00:00:00"}
+{"level":"info","message":"Running Cron Job: Auto-Close Expired Drives","timestamp":"2026-02-13 00:00:00"}
+{"level":"info","message":"Running Cron Job: Auto-Close Expired Drives","timestamp":"2026-02-13 00:00:00"}
+{"level":"info","message":"Company tcs created with Recruiter tcs@gmail.com by Admin admin@avani.com","timestamp":"2026-02-13 15:55:05"}
+{"level":"info","message":"Company hr created with Recruiter hr@gmail.com by Admin admin@avani.com","timestamp":"2026-02-14 01:17:51"}
+{"level":"error","message":"Email Failed: Missing credentials for \"PLAIN\"","timestamp":"2026-02-14 01:28:04"}
+{"level":"error","message":"Email Failed: Missing credentials for \"PLAIN\"","timestamp":"2026-02-14 20:11:13"}
+{"level":"error","message":"Email Failed: Missing credentials for \"PLAIN\"","timestamp":"2026-02-14 20:11:47"}
+{"level":"error","message":"Email Failed: Missing credentials for \"PLAIN\"","timestamp":"2026-02-14 20:19:07"}
+{"level":"error","message":"Auth Failed: invalid signature - IP: ::1","timestamp":"2026-02-14 21:47:07"}
+{"level":"error","message":"Auth Failed: invalid signature - IP: ::1","timestamp":"2026-02-14 21:47:07"}
+{"level":"error","message":"Create Company Error: E11000 duplicate key error collection: test.companies index: name_1 dup key: { name: \"Google\" }","timestamp":"2026-02-15 09:31:01"}
+{"level":"info","message":"Company Google created with Recruiter sundarpichai@gmail.com by Admin admin@avani.com","timestamp":"2026-02-15 09:36:42"}
